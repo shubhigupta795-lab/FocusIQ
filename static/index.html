@@ -1,0 +1,282 @@
+<!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>FocusIQ · Digital wellness lab</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/plotly.js">
+        </script>
+    </head>
+    <body>
+<aside>
+            <div class="brand"><span class="logo">F<span>i</span></span><div>FocusIQ<small>Digital wellness lab</small></div>
+            </div>
+            <div class="navlabel">WORKSPACE</div>
+            <nav><button data-page="overview" class="active">◉ &nbsp; Overview</button><button data-page="profile">◎ &nbsp; My wellness</button><button data-page="analysis">▥ &nbsp; Data studio</button><button data-page="research">∑ &nbsp; Research lab</button><button data-page="probability">≈ &nbsp; Probability lab</button><button data-page="clusters">◈ &nbsp; Behaviour clusters</button><button data-page="models">▣ &nbsp; Model lab</button><button data-page="monitor">◷ &nbsp; Monitoring</button></nav>
+            <div class="asidefoot">SEMESTER 5 / DATA SCIENCE<br>Local workspace · Uploaded CSV</div>
+        </aside>
+<main>
+            <header>
+                <div><small>FOCUSIQ / DIGITAL WELLNESS INTELLIGENCE</small><h1 id="heading">Your digital habits, decoded.</h1>
+                </div><span class="tag">● Uploaded student dataset · 20,000 rows</span></header>
+            <div id="status" role="status">
+            </div>
+<section id="overview" class="page active">
+                <div class="intro">
+                    <div><span class="eyebrow">A BETTER DIGITAL ROUTINE</span><h2>Make time for what matters.</h2>
+                        <p>Explore your digital habits and see how changes relate to productivity.</p><button class="primary" data-go="profile">Full personal assessment →</button></div>
+                    <div class="hero-stat"><span>YOUR SAVED WELLNESS SCORE</span><div class="gauge" id="heroGauge" style="--score:0"><b id="heroScore">—</b><small> / 100</small></div><span id="heroPersona">Complete your personal assessment</span></div>
+                </div>
+<div class="filterbar"><label>Age group<select id="filterAge"><option>All</option><option>17–20</option><option>21–25</option><option>26–29</option></select></label><label>Gender<select id="filterStyle"><option>All</option><option>Male</option><option>Female</option><option>Other</option></select></label><label>Minimum screen hours<input id="filterMin" type="number" min="0" max="24" value="0" step=".5"></label><label>Maximum screen hours<input id="filterMax" type="number" min="0" max="24" value="24" step=".5"></label><button id="applyFilter">Apply filters</button></div>
+                <div id="kpis" class="metrics">
+                </div>
+                <article class="sim-card">
+                    <h3>Your wellness score and what-if simulator</h3>
+                    <p>Explore a personal scenario. Notifications and night use affect the wellness heuristic, not the trained ML model.</p>
+                    <div class="sim-layout">
+                        <div class="sim-score"><svg viewBox="0 0 220 132" role="img" aria-label="Wellness score gauge"><path d="M 25 110 A 85 85 0 0 1 195 110" fill="none" stroke="#dce4e9" stroke-width="15" stroke-linecap="round"/><path id="simArc" d="M 25 110 A 85 85 0 0 1 195 110" fill="none" stroke="#f0aa31" stroke-width="15" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/><text id="simScore" x="110" y="86" text-anchor="middle" class="svg-number">—</text><text x="110" y="107" text-anchor="middle" class="svg-caption">out of 100</text></svg><div id="simPercentile">Comparing phone usage…</div>
+                            <div id="simPrediction" aria-live="polite">Estimated productivity: —</div><p id="phoneBuddy" class="note"></p>
+                        </div>
+                        <div class="slider-stack"><label>Social media <input id="simSocial" type="range" min="0" max="12" step=".5" value="2"><output id="simSocialOut"></output></label><label>Sleep <input id="simSleep" type="range" min="0" max="12" step=".5" value="7"><output id="simSleepOut"></output></label><label>Notifications <input id="simNotif" type="range" min="0" max="200" step="5" value="100"><output id="simNotifOut"></output></label><label>Night phone use <input id="simNight" type="range" min="0" max="180" step="15" value="60"><output id="simNightOut"></output></label><p class="note" id="simBase">Other model inputs use the default profile until you complete a personal assessment. Scenario predictions are not causal effects.</p>
+                        </div>
+                    </div>
+                </article>
+<div class="two">
+                    <article>
+                        <h3>What affects productivity most</h3>
+                        <p>Mean absolute SHAP contribution to low-productivity risk, from a sample of held-out records.</p>
+                        <div class="chart" id="globalImportance">
+                        </div>
+                        <p class="note" id="importanceNote">Model-based associations; notification and night usage are not in the dataset.</p>
+                    </article>
+                    <article>
+                        <h3>Habit heatmap</h3>
+                        <p>Rows = phone-time groups; columns = productivity ratings. Each cell shows the percentage of students in that row and category.</p>
+                        <div class="chart" id="heatmap">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Histogram: daily screen time</h3>
+                        <p>Number of students in each hour range.</p>
+                        <div class="chart" id="overviewHist">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Scatter plot: screen time vs productivity</h3>
+                        <p>Blue dots = individual student records (up to 1,800). Orange dashed line = linear regression trend fitted on all filtered records.</p>
+                        <div class="chart" id="overviewScatter">
+                        </div>
+                    </article>
+                </div>
+                <article>
+                    <h3>Box plot: productivity by screen-time group</h3>
+                    <p>Box = middle 50%, line = median, dots = outliers.</p>
+                    <div class="chart" id="overviewBox">
+                    </div>
+                </article>
+                <div class="two">
+                    <article>
+                        <h3>Where the time goes</h3>
+                        <p>Separate reported hours; categories may overlap.</p>
+                        <div class="chart" id="appsChart">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Productivity by phone usage</h3>
+                        <p>Mean productivity and focus by phone-use band; no date column.</p>
+                        <div class="chart" id="trend">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Screen time &amp; sleep</h3>
+                        <p>Each point is a sampled student record (up to 1,800).</p>
+                        <div class="chart" id="sleepChart">
+                        </div>
+                    </article>
+                </div>
+                <article>
+                    <h3>Five findings from the selected data</h3>
+                    <div id="insights" class="findings">
+                    </div>
+                    <p class="note">Associations in the uploaded dataset; data collection provenance is unverified.</p>
+                </article>
+            </section>
+<section id="profile" class="page">
+                <div class="two">
+                    <article>
+                        <h3>Tell us about your day</h3>
+                        <p>Use your phone's Screen Time or Digital Wellbeing summary. Reported app hours are independent measurements. Optional notifications, night use and phone checks are not ML inputs.</p>
+                        <form id="habits">
+                            <div class="formgrid" id="habitFields">
+                            </div><button type="submit" class="primary">Analyze my habits</button></form>
+                    </article>
+                    <article>
+                        <h3>Your digital wellness</h3>
+                        <div class="gauge" id="profileGauge" style="--score:0"><b id="profileScore">—</b><small>/100</small></div>
+                        <h2 id="persona">Not assessed yet</h2>
+                        <div id="profileResult">
+                        </div><button id="pdf" disabled>Download personal PDF ↓</button><button id="explain" disabled>Explain prediction (SHAP)</button><div id="explanation" class="chart">
+                        </div>
+                    </article>
+                </div>
+                <article>
+                    <h3>What-if habit simulator</h3>
+                    <p>Change social-media use and nighttime usage while retaining other habits. These are model scenarios, not causal claims.</p>
+                    <div class="formgrid"><label>Reduce social media (minutes)<input type="range" id="cutSocial" min="0" max="180" step="15" value="30"><output id="cutSocialVal">30</output></label><label>Reduce nighttime usage (minutes)<input type="range" id="cutNight" min="0" max="180" step="15" value="30"><output id="cutNightVal">30</output></label></div><button id="simulate" disabled>Compare scenario</button><div id="scenarioResult">
+                    </div>
+                </article>
+            </section>
+<section id="analysis" class="page">
+                <article>
+                    <h3>Data pipeline audit</h3>
+                    <div id="audit">
+                    </div>
+                    <p>Original CSV mapped to an analysis schema; duplicate IDs and invalid targets removed; feature imputation and encoding fit inside training folds. IQR flags outliers without automatically deleting them.</p><a href="/static/schema.html" target="_blank">Data dictionary ↗</a><div id="statsTable">
+                    </div>
+                </article>
+                <div class="two">
+                    <article>
+                        <h3>Screen-time distribution</h3>
+                        <div class="chart" id="hist">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Productivity by phone-time group</h3>
+                        <div class="chart" id="boxplot">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Social media and productivity</h3><p>Blue circles: 17–20 · amber diamonds: 21–25 · green squares: 26–29.</p>
+                        <div class="chart" id="notifChart">
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Gaming and productivity</h3><p>Colour and marker shape identify age groups.</p>
+                        <div class="chart" id="checkChart">
+                        </div>
+                    </article>
+                    <article class="wide-chart">
+                        <h3>Correlation matrix</h3>
+                        <p>Both axes list measured variables. Color represents Pearson correlation (−1 to +1).</p>
+                        <div class="chart" id="corr">
+                        </div>
+                    </article>
+                    <article class="wide-chart">
+                        <h3>Pairplot / scatter matrix</h3>
+                        <p>Six pairwise scatter plots compare phone time, productivity, sleep and social media. Each panel names its own X and Y variables. Dots represent up to 450 sampled student records. Colour and marker shape identify the age group.</p>
+                        <div class="chart" id="pairplot">
+                        </div>
+                    </article>
+                </div>
+            </section>
+<section id="research" class="page">
+                <article>
+                    <h3>Cross-sectional statistical research</h3>
+                    <p>The uploaded CSV has no dates or intervention groups. These tests compare students, not before/after detox.</p>
+                    <div id="researchKpis" class="metrics">
+                    </div>
+                    <div id="beforeAfter" class="chart">
+                    </div>
+                    <div id="researchTable">
+                    </div><label>Significance threshold α<select id="sig"><option value=".05">0.05</option><option value=".01">0.01</option><option value=".1">0.10</option></select></label><p id="researchDetails">
+                    </p>
+                </article>
+            </section>
+<section id="probability" class="page">
+                <article>
+                    <h3>Interactive probability simulator</h3>
+                    <div class="filterbar"><label>Distribution<select id="dist"><option>Normal</option><option>Binomial</option><option>Poisson</option><option>Uniform</option></select></label><label id="paramLabel">Parameter<input type="number" id="param" min=".1" max="100" step=".1" value="10"></label><label>Sample size<input type="number" id="sample" min="5" max="1000" value="100"></label><label>Significance α<input type="number" id="alpha" min=".001" max=".49" step=".01" value=".05"></label><label>Standardized effect<input type="number" id="effect" min="0" max="3" step=".05" value=".3"></label><button id="runProb">Simulate</button></div>
+                    <p id="paramHelp">
+                    </p>
+                    <div id="probChart" class="chart">
+                    </div>
+                    <div id="probKpis" class="metrics">
+                    </div>
+                    <p>Type I and II error simulation uses a separate one-sided Z-test with a known population SD; effect size and sample size control power.</p>
+                </article>
+            </section>
+<section id="clusters" class="page">
+    <article>
+        <h3>Behavioural profiles</h3>
+        <p>Both methods group the same 2,000 students using ten standardized numeric habits. Colours identify the four groups within each method; names describe the two strongest relative differences in their average habits, not diagnoses.</p>
+        <label>Clustering method
+            <select id="clusterMethod"><option value="k">K-Means</option><option value="h">Hierarchical</option></select>
+        </label>
+        <div id="clusterCards" class="cluster-cards"></div>
+        <div id="clusterPopulation" class="chart"></div>
+        <div id="clusterHabits" class="chart"></div>
+        <div id="clusterProfiles"></div>
+        <h3>Compare clustering quality</h3>
+        <div id="clusterQuality" class="metrics"></div>
+        <p class="note" id="pcaVariance"></p>
+        <p class="note">Silhouette ranges from −1 to 1; higher indicates better separation in the standardized feature space. Values near zero suggest substantial overlap. The PCA calculation is retained as a dimensionality-reduction demonstration, but the profiles above use original hours.</p>
+    </article>
+</section>
+<section id="models" class="page">
+    <article>
+        <h3>Model selection &amp; optimization</h3>
+        <p>Three classes: Low (below 40), Normal (40 to below 70), High (70–100). These are project-defined thresholds. Three-fold grouped cross-validation selects the highest macro F1 on training data; the same held-out students evaluate every model.</p>
+        <div id="modelSummary"></div>
+        <div id="modelTable"></div>
+        <button id="retrain" class="primary">Retrain and save new model version</button>
+    </article>
+    <article>
+        <h3>Inspect any trained classifier</h3>
+        <label>Choose model <select id="modelChoice"></select></label>
+        <div id="selectedMetrics" class="metrics"></div>
+        <p class="note">Precision, recall and F1 are macro averages (each class has equal weight). ROC AUC is the macro one-vs-rest average. The dropdown is for comparison only; it does not change the deployed model.</p>
+        <div class="two">
+            <div><h3>Three-class confusion matrix</h3><div id="confusion" class="chart"></div></div>
+            <div><h3>ROC curves — one vs rest</h3><div id="roc" class="chart"></div></div>
+        </div>
+    </article>
+    <article>
+        <h3>Bias–variance tradeoff</h3>
+        <div id="bias" class="chart"></div>
+    </article>
+</section>
+<section id="monitor" class="page">
+                <article>
+                    <h3>Model monitoring</h3>
+                    <p>Check how well the model predicts productivity after deployment. Predictions are saved when you submit My wellness. Actual scores are entered later when you know the outcome.</p>
+                    <div id="monitorKpis" class="metrics">
+                    </div>
+                    <h3>Input changes compared with training data (feature drift)</h3>
+                    <div id="drift" class="chart">
+                    </div>
+                    <p id="driftNote" class="note"></p>
+                </article>
+                <article>
+                    <h3>Check a prediction against your actual result</h3>
+                    <p>1. Submit an assessment in My wellness. 2. Select its saved prediction below. 3. Enter your independently observed productivity score out of 100 and save it.</p>
+                    <p class="note">Example: if the model predicts 75 and you observe 70, the absolute error is 5 points. The average absolute error (MAE) uses saved actual scores for the active model only.</p>
+                    <form id="actualForm" class="formgrid">
+                        <label>Saved prediction
+                            <select id="predID" required><option value="">Select a saved prediction</option></select>
+                        </label>
+                        <label>Actual productivity (0–100)
+                            <input type="number" id="actualFocus" min="0" max="100" step="any" placeholder="e.g. 70" required disabled>
+                        </label>
+                        <button id="saveActual" class="primary" disabled>Save actual score</button>
+                        <button type="button" data-go="profile">Create a prediction in My wellness</button>
+                    </form>
+                    <p id="predictionDetails" class="note" aria-live="polite"></p>
+                    <p id="monitorFeedback" role="status" aria-live="polite"></p>
+                </article>
+                <article>
+                    <h3>Prediction performance over time</h3><p>After actual scores are recorded, this chart shows daily mean absolute error for predictions from the active model, grouped by prediction date (UTC). A three-observed-day rolling mean appears after three dates. The original CSV has no dates.</p><div id="errorTrend" class="chart"></div><p id="errorTrendNote" class="note"></p><h3>Prediction history</h3>
+                    <p>The predicted score is the regression estimate. The predicted class and chance of a score below 40 come from the three-class classification model. Actual score is your independently observed result, and error is the absolute difference between actual and predicted scores.</p>
+                    <p class="note">Showing the latest 100 predictions. Older records still contribute to active-model monitoring totals.</p>
+                    <p id="monitorEmpty" class="note"></p>
+                    <div id="monitorTable"></div>
+                    <p id="versions">
+                    </p><a href="/docs" target="_blank">Open live FastAPI documentation ↗</a></article>
+            </section>
+<footer>FocusIQ · Academic prototype · No medical or causal claims · Uploaded dataset provenance is unverified.</footer>
+        </main>
+        <script src="/static/app.js">
+        </script>
+        <script src="/static/dashboard.js">
+        </script>
+    </body>
+</html>

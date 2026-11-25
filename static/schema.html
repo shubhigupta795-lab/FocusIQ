@@ -1,0 +1,18 @@
+<!doctype html><html lang="en">
+    <meta charset="utf-8">
+    <title>FocusIQ data dictionary</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <body>
+        <div style="max-width:900px;margin:30px auto;padding:20px">
+            <h1>Data dictionary and collection guide</h1>
+            <article>
+                <h3>Uploaded dataset</h3>
+                <p>student_productivity_distraction_dataset_20000.csv: 20,000 unique student IDs and 18 columns. Source previously identified as <a href="https://www.kaggle.com/datasets/sehaj1104/student-productivity-and-digital-distraction-dataset">Student Productivity &amp; Digital Distraction Dataset</a>; actual collection methodology is unverified. The uploaded file is preserved byte-for-byte.</p>
+                <p>Age, gender, study hours per day, sleep hours, phone usage hours, social media hours, YouTube hours, gaming hours, breaks per day, coffee intake mg, exercise minutes, assignments completed, attendance percentage, stress level, focus score, final grade, productivity score. Phone and app hours are separate measurements; their sum may exceed phone usage. Do not treat them as mutually exclusive. No timestamps, notifications, checks, night usage or intervention data exist in this source.</p>
+                <h3>Productivity classes</h3>
+                <p>Low: below 40; Normal: 40 to below 70; High: 70 to 100. These are project-defined thresholds. Productivity score is the prediction target, not a model input. Focus score and final grade are excluded from the prediction features.</p>
+                <p>Personal assessments and observed outcomes are stored separately in local SQLite. The dataset does not have dates, so time-series monitoring uses only dated predictions with recorded outcomes. All findings are exploratory; association is not causation.</p>
+            </article>
+        </div>
+    </body>
+</html>
